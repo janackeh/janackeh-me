@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+  <link rel="mask-icon" href="../favicon.svg" color="#b76e79" />
+  <title>Case Study: AI-Assisted Call-Note Drafting — Janackeh Blackwell</title>
+  <meta name="description" content="A human-in-the-loop AI workflow that turns call transcripts into clean, consistent CRM notes. An anonymized case study by Janackeh Blackwell, CX operations & human-in-the-loop AI." />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./case-study.css" />
+</head>
+<body>
+  <a class="skip-link" href="#article">Skip to case study</a>
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="../" class="brand-lockup" aria-label="Janackeh Blackwell — home">
+        <span class="jmark" aria-hidden="true">J</span>
+        <span class="brand-name">Janackeh Blackwell</span>
+      </a>
+      <nav class="header-nav" aria-label="Site navigation">
+        <a href="../demo/" class="nav-link">Demo</a>
+        <a href="../#work" class="nav-link">Work</a>
+        <a href="../#contact" class="nav-link">Contact</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="article" class="article">
+
+    <section class="cs-hero">
+      <p class="eyebrow reveal">Case Study · CX Operations &amp; Human-in-the-Loop AI</p>
+      <h1 class="cs-title reveal">AI-Assisted Call-Note Drafting Workflow</h1>
+      <p class="cs-sub reveal">A human-in-the-loop AI workflow that turns call transcripts into clean, consistent CRM notes.</p>
+      <div class="cs-meta reveal">
+        <span class="meta-chip">Designed &amp; used by Janackeh Blackwell</span>
+        <span class="meta-dot">·</span>
+        <span class="meta-chip">Anonymized</span>
+        <span class="meta-dot">·</span>
+        <span class="meta-chip">Gemini · Five9 · NetSuite</span>
+      </div>
+    </section>
+
+    <div class="prose">
+
+      <p class="lede reveal">An anonymized case study based on a support workflow I designed and use. Customer names, order numbers, and ticket numbers below are illustrative. This is a workflow and prompt structure I designed and adapted for my support documentation process.</p>
+
+      <section class="block reveal" id="tldr">
+        <h2>TL;DR</h2>
+        <p>I built a custom AI assistant (a Gemini Gem) that converts an AI-generated call summary into a concise, consistently formatted CRM call note — a <strong>Subject</strong> line plus a 1–3 sentence <strong>Call Summary</strong>. The rep stays in the loop: the AI produces a draft, the rep reviews and edits it, then pastes it into the CRM. It's designed to capture every relevant call detail consistently and raise note quality — without removing human judgment.</p>
+      </section>
+
+      <section class="block reveal">
+        <h2>How this started</h2>
+        <p>The team was recently told to use the Five9 Agent Assist transcript on every call and shorten it into a call note in NetSuite. The entire guidance was essentially one sentence: "you can use AI." No template, no format, no guardrails. So I built my own — a Gem with a strict output format and a set of behavioral rules, so my own notes would be consistent, scannable, and fast to produce instead of ad hoc every time.</p>
+      </section>
+
+      <section class="block reveal">
+        <h2>The problem</h2>
+        <p>After every call, support reps have to write a case note in the CRM. The raw material is an AI-generated call summary that's verbose, uses generic labels ("Agent," "Customer"), mixes tenses, and buries the actual outcome.</p>
+        <p class="pullquote">The real cost wasn't time — it was completeness.</p>
+        <p>Writing notes under pressure from a messy source meant relevant details got dropped: the reason for the call, the action taken, the outcome, a ticket number, a follow-up. The workflow's job is to make sure nothing important gets lost — turning a verbose, inconsistent source into a clean, scannable note that captures the full picture, every time. That's exactly the kind of task AI should handle <em>without</em> taking the rep out of the loop.</p>
+      </section>
+
+      <section class="block reveal" id="workflow">
+        <h2>The workflow</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <span class="flow-num">1</span>
+            <span class="flow-label">Five9 Agent Assist transcript summary</span>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-step accent">
+            <span class="flow-num">2</span>
+            <span class="flow-label">Gemini Gem runs my prompt</span>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-step">
+            <span class="flow-num">3</span>
+            <span class="flow-label">Draft: Subject + Call Summary</span>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-step">
+            <span class="flow-num">4</span>
+            <span class="flow-label">Rep reviews &amp; edits → pastes into NetSuite</span>
+          </div>
+        </div>
+        <p class="callout"><strong>Key point:</strong> the AI never writes directly to the CRM. It produces a draft; a human reviews, edits, and posts it. The human is the gatekeeper for accuracy, tone, and judgment — the AI just removes the repetitive formatting work.</p>
+      </section>
+
+      <section class="block reveal" id="prompt">
+        <h2>The prompt design</h2>
+        <p>The workflow lives or dies on the prompt. Here's the design (a generalized version of what I run), with the interesting prompt-engineering choices called out below.</p>
+        <div class="codecard">
+          <div class="codecard-bar">
+            <span class="codecard-label">the-prompt.md</span>
+            <button class="copy-btn" data-copy-target="prompt-code">Copy</button>
+          </div>
+          <pre id="prompt-code" class="codeblock"><code>You are an expert internal communications and operations assistant
+specializing in CRM call-note documentation. Your sole task is to
+transform a call transcript summary into clean, highly scannable
+CRM call notes.
+
+1. OUTPUT FORMAT
+Your output must contain ONLY these two fields, with no
+conversational filler before or after:
+
+Subject:
+[Customer First Name] called for [very short reason]
+
+Call Summary:
+[1–3 concise sentences focusing strictly on the call result,
+incorporating key details needed for future reference.]
+
+2. CORE RULES
+- Result Focus: Summarize the outcome described in the
+  "Result" section of the input only.
+- Identity Substitution: NEVER use the word "Agent".
+  Always use "Janackeh" instead.
+- Customer Focus: NEVER use the generic word "Customer" if the
+  customer's name is available. Use the customer's first name.
+- Ticket Numbers: If a ticket number appears anywhere in the
+  text, include it in the summary.
+- Tense & Style: Write exclusively in the past tense. No numbered
+  lists, bullet points, or section headers inside the Call Summary.
+  Combine into a brief, fluid, professional summary.
+- Strict Brevity: Exclude filler, greetings, and historical steps.
+  Focus on what was ultimately achieved, given, or instructed.
+
+3. SUBJECT EXAMPLES
+- Alex called for order status
+- Jordan called about credit card charges</code></pre>
+        </div>
+
+        <h3 class="h3">Why these prompt choices matter</h3>
+        <ul class="choices">
+          <li><span class="choice-key">Identity substitution</span> — "never say 'Agent', use the rep's name." Forces a personal, accountable voice instead of a generic call-center tone.</li>
+          <li><span class="choice-key">Customer-focus rule</span> — replaces the dehumanizing "Customer did X" with the person's actual name.</li>
+          <li><span class="choice-key">Result-only focus (v2)</span> — when the note guideline changed to "summarize the result, not the whole call," I updated the prompt the same week to restrict the summary to the Result section. That adaptability is the point: the prompt is a versioned, maintainable asset, not a one-off.</li>
+          <li><span class="choice-key">Strict output schema</span> — two fields, no filler, so the output is paste-ready and consistent each time.</li>
+          <li><span class="choice-key">Ticket-number carry-through</span> — a small rule that prevents a common documentation gap.</li>
+        </ul>
+
+        <h3 class="h3">What I learned about prompting</h3>
+        <p>The biggest lesson: <strong>let the AI prompt itself.</strong> Instead of hand-writing every rule from scratch, I give the model the input, the goal, and the constraints, and let it produce an expert-level prompt — then I refine. That's how this workflow's prompt was shaped: I described what I wanted (a clean Subject + Call Summary, past tense, no filler, the customer's first name, the ticket number, no "Agent"), let the AI draft the system prompt, and tightened it from there. It's faster, and the result is usually sharper than what I'd write solo. The skill isn't writing the perfect prompt — it's knowing what to constrain and then editing the draft like a senior reviewer.</p>
+      </section>
+
+      <section class="block reveal" id="before-after">
+        <h2>Before / after</h2>
+        <div class="ba-grid">
+          <div class="ba-card ba-before">
+            <span class="ba-tag">Before</span>
+            <p class="ba-label">Raw transcript summary — verbose, generic, mixed tense</p>
+            <p class="ba-text">Reason for call: The customer, Jordan, is calling to inquire about two charges… Agent actions: Verified identity, looked up invoices… Result: As a result of the agent's actions, Jordan received the invoice for the first charge of $274.77 via email. The agent was unable to locate the second charge of $1,025.03 but provided an explanation regarding the possibility of it being a pre-authorization charge. Jordan was informed to follow up if the charge did not resolve by the specified date.</p>
+          </div>
+          <div class="ba-card ba-after">
+            <span class="ba-tag">After</span>
+            <p class="ba-label">Clean, paste-ready CRM note</p>
+            <p class="ba-text"><strong>Subject:</strong> Jordan called about credit card charges</p>
+            <p class="ba-text"><strong>Call Summary:</strong> Jordan received the requested invoice for $274.77 via email. Janackeh was unable to locate the second charge of $1,025.03 but explained it was likely a temporary pre-authorization charge. Janackeh instructed Jordan to follow up if the charge did not fall off by the specified date.</p>
+          </div>
+        </div>
+        <p class="note-inline">All names, dollar amounts, order numbers, and ticket numbers in the examples are fake.</p>
+      </section>
+
+      <section class="block reveal" id="human-in-loop">
+        <h2>How the human stays in the loop</h2>
+        <ol class="steps">
+          <li>The AI generates a <strong>draft</strong> — never a final.</li>
+          <li>The rep <strong>reviews</strong> the draft against what actually happened on the call (the AI summary can be wrong or incomplete).</li>
+          <li>The rep <strong>edits</strong> — fixes names, adds anything the transcript missed, adjusts tone.</li>
+          <li>The rep <strong>posts</strong> the note to the CRM.</li>
+        </ol>
+
+        <h3 class="h3">When the AI gets it wrong (and how I handle it)</h3>
+        <p>The workflow isn't perfect — and that's exactly why the human stays in the loop. Sometimes the AI summary gets a detail wrong (the caller's name, the actual nature of the call), or the summarized transcript doesn't populate at all. When that happens, I don't fight the broken summary: I paste the <strong>full raw transcript</strong> straight into the Gem, and the prompt still produces a clean, correctly-formatted note. The fallback is built into the workflow, not bolted on — which is why the prompt's robustness matters more than any single "perfect" output.</p>
+        <p>This is the part I'd want a skeptical CX/Ops leader to see: the tool isn't trusted blindly, and it degrades gracefully when the upstream AI summary fails.</p>
+        <p>This is the model I believe in for AI in support: AI handles the repetitive transformation (search, summarize, format, verify) so the human stays focused on judgment, empathy, and complex resolution.</p>
+      </section>
+
+      <section class="block reveal" id="metrics">
+        <h2>Metrics to track</h2>
+        <p class="note-inline">Outcomes are not yet formally measured — these are the metrics I'm tracking to validate the workflow.</p>
+        <ul class="choices">
+          <li><span class="choice-key">Documentation completeness (primary)</span> — whether every relevant detail is captured: reason for call, action taken, outcome, ticket number, follow-ups. This is the real win — before, details got dropped under pressure; now they don't.</li>
+          <li><span class="choice-key">Note consistency</span> — does every note follow the Subject + Call Summary schema.</li>
+          <li><span class="choice-key">QA pass rate on documentation</span> — fewer notes flagged for missing ticket numbers, wrong tense, or missing outcome.</li>
+          <li><span class="choice-key">Adoption</span> — how often I use the draft vs. rewrite from scratch.</li>
+          <li><span class="choice-key">After-call documentation time (secondary)</span> — not the goal, but a useful efficiency signal to watch.</li>
+        </ul>
+      </section>
+
+      <section class="block reveal" id="future">
+        <h2>Edge cases &amp; future state</h2>
+        <p><strong>The hard case: multi-issue, multi-order calls.</strong> When a single call covers several issues across several orders, the workflow's single-note output doesn't fit cleanly — and right now the team is told we don't have to use Agent Assist for those calls at all.</p>
+        <p><strong>Planned feature: split into 2+ notes.</strong> For the future state, I want the workflow to detect a multi-issue / multi-order call and separate the output into two or more structured notes — one per issue or order — each with its own Subject and Call Summary. That turns today's edge case into a handled one, and it's the next version of the prompt I'm designing.</p>
+      </section>
+
+      <section class="block reveal" id="why">
+        <h2>Why this matters (the bigger picture)</h2>
+        <p class="pullquote">AI in support should do all the time-consuming, repetitive tasks so humans can remain the warm human element in the relationship.</p>
+        <p>This isn't "a cool prompt." It's a small example of a repeatable pattern: take a repetitive, judgment-light documentation task, let AI draft it, keep the human as the reviewer. That pattern generalizes — to email drafting, mispick verification, knowledge-base article drafting, and coaching summaries — which is exactly the lane I'm building toward: <strong>AI-enabled support operations and CX workflow design.</strong></p>
+      </section>
+
+      <section class="block reveal" id="stack">
+        <h2>Tech stack</h2>
+        <div class="stack-grid">
+          <div class="stack-card"><span class="stack-name">Gemini Gem</span><span class="stack-role">AI assistant running the prompt</span></div>
+          <div class="stack-card"><span class="stack-name">Five9 Agent Assist</span><span class="stack-role">Source of the AI-generated call summary</span></div>
+          <div class="stack-card"><span class="stack-name">NetSuite CRM</span><span class="stack-role">Destination for the final note</span></div>
+        </div>
+      </section>
+
+      <section class="cta reveal" id="try">
+        <h2>Try the demo</h2>
+        <p>An interactive web app that lets you run the workflow yourself on mock data — scenario presets, a v1/v2 mode toggle, a PII pre-check, and a human-edit step that shows exactly what you changed.</p>
+        <div class="cta-actions">
+          <a href="../demo/" class="btn btn-solid">Open the demo →</a>
+          <a href="https://github.com/janackeh" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub · README &amp; prompt template</a>
+        </div>
+      </section>
+
+      <p class="disclaimer reveal">An anonymized case study based on a support workflow I designed and use. Names, orders, and ticket numbers are illustrative. The prompt design is my own work.</p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="../" class="footer-back">← Back to Janackeh Blackwell</a>
+      <a href="../demo/" class="footer-link">Try the demo</a>
+      <a href="https://www.linkedin.com/in/janackeh/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+      <a href="https://github.com/janackeh" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+    </div>
+  </footer>
+
+  <script src="./case-study.js" defer></script>
+</body>
+</html>
