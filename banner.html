@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>LinkedIn Banner — Janackeh Blackwell</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1584px; height: 396px; }
+  body {
+    font-family: 'Satoshi', -apple-system, sans-serif;
+    background: #fbfbfd;
+    color: #1d1d1f;
+    overflow: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* soft rose gold glow, right-center (decorative; crops fine on mobile) */
+  .glow {
+    position: absolute;
+    right: -120px; top: 50%; transform: translateY(-50%);
+    width: 720px; height: 720px;
+    background: radial-gradient(circle at center, rgba(183,110,121,0.20) 0%, rgba(183,110,121,0.07) 42%, transparent 66%);
+    filter: blur(8px);
+    pointer-events: none;
+  }
+
+  /* faint monogram watermark on the right for visual balance */
+  .monogram {
+    position: absolute;
+    right: 96px; top: 50%; transform: translateY(-54%);
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 300px;
+    line-height: 1;
+    color: #b76e79;
+    opacity: 0.07;
+    letter-spacing: -0.04em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* brand block: clears the profile photo (bottom-left) by starting at x=360 */
+  .brand {
+    position: absolute;
+    left: 360px;
+    top: 45%;
+    transform: translateY(-50%);
+    max-width: 920px;
+  }
+  .eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .jmark {
+    width: 44px; height: 44px;
+    background: #b76e79;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #b76e79;
+  }
+  .name {
+    font-weight: 900;
+    font-size: 76px;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    color: #1d1d1f;
+    margin-bottom: 16px;
+  }
+  .rule {
+    width: 72px; height: 3px;
+    background: #b76e79;
+    border-radius: 2px;
+    margin-bottom: 18px;
+  }
+  .tagline {
+    font-size: 24px;
+    font-weight: 400;
+    color: #6e6e73;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+  }
+  .tagline .dot { color: #b76e79; margin: 0 10px; font-weight: 500; }
+  .site {
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #b76e79;
+  }
+  .site .at { color: #b76e79; opacity: 0.55; margin-right: 8px; }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="monogram">J</div>
+  <div class="brand">
+    <div class="eyebrow-row">
+      <div class="jmark">J</div>
+      <div class="eyebrow">Customer Experience Operations · Human-in-the-Loop AI</div>
+    </div>
+    <div class="name">Janackeh Blackwell</div>
+    <div class="rule"></div>
+    <div class="tagline">Senior Customer Support Associate<span class="dot">·</span>AI Workflow Builder<span class="dot">·</span>Zoro</div>
+    <div class="site"><span class="at">↗</span>janackeh.me</div>
+  </div>
+</body>
+</html>

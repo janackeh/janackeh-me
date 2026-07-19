@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+  <link rel="mask-icon" href="../../favicon.svg" color="#b76e79" />
+  <title>Case Study: Mispick Verification — Janackeh Blackwell</title>
+  <meta name="description" content="An evidence-first investigation workflow that turns 'you shipped the wrong item' into a root cause: true mispick, packaging change, vendor substitution, customer error, listing error, or variation confusion. An anonymized case study by Janackeh Blackwell." />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../case-study.css" />
+</head>
+<body>
+  <a class="skip-link" href="#article">Skip to case study</a>
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="../../" class="brand-lockup" aria-label="Janackeh Blackwell — home">
+        <span class="jmark" aria-hidden="true">J</span>
+        <span class="brand-name">Janackeh Blackwell</span>
+      </a>
+      <nav class="header-nav" aria-label="Site navigation">
+        <a href="../../investigation/" class="nav-link">Demo</a>
+        <a href="../../#work" class="nav-link">Work</a>
+        <a href="../../#contact" class="nav-link">Contact</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="article" class="article">
+
+    <section class="cs-hero">
+      <p class="eyebrow reveal">Case Study · CX Operations &amp; Human-in-the-Loop AI</p>
+      <h1 class="cs-title reveal">Mispick Verification: From &ldquo;Wrong Item&rdquo; to &ldquo;What Actually Happened&rdquo;</h1>
+      <p class="cs-sub reveal">An evidence-first investigation workflow that figures out whether a reported mispick is a true warehouse error — or something else entirely.</p>
+      <div class="cs-meta reveal">
+        <span class="meta-chip">Designed &amp; used by Janackeh Blackwell</span>
+        <span class="meta-dot">·</span>
+        <span class="meta-chip">Anonymized</span>
+        <span class="meta-dot">·</span>
+        <span class="meta-chip">Gemini · Order management · Catalog</span>
+      </div>
+    </section>
+
+    <div class="prose">
+
+      <p class="lede reveal">An anonymized case study based on a support workflow I designed and use. Customer names, order numbers, part numbers, and ticket numbers below are illustrative. The investigation process, decision tree, and playbook are my own work.</p>
+
+      <section class="block reveal" id="tldr">
+        <h2>TL;DR</h2>
+        <p>When a customer says &ldquo;you shipped the wrong item,&rdquo; the easy assumption is that the warehouse mispicked. But that assumption is wrong more often than people think — and acting on it means replacements, refunds, and escalations that never had to happen. So I built an <strong>evidence-first investigation workflow</strong> that compares what was ordered against what was actually received, spec by spec, and classifies the case into one of six root causes. The rep stays in the loop: AI helps draft the customer response and the internal notes, but the human confirms the specs, owns the classification, and decides the resolution.</p>
+      </section>
+
+      <section class="block reveal">
+        <h2>How this started</h2>
+        <p>It started as product search. I built a Gemini Gem for real-time, verified catalog product searches during calls — enforcing catalog item-number validation, cross-referencing manufacturer part numbers, redirecting to the manufacturer when needed, and returning a scannable, call-ready format. That work made me faster at finding the right part.</p>
+        <p>But the harder problem wasn't finding parts — it was the call that starts with <strong>&ldquo;you sent me the wrong thing.&rdquo;</strong> Those calls are slow, ambiguous, and expensive. They often end in a replacement or refund because nobody has the time to figure out what actually happened. So the work evolved: from product search into <strong>investigation</strong> — did the warehouse actually ship the wrong item, or did something else happen?</p>
+      </section>
+
+      <section class="block reveal" id="problem">
+        <h2>The problem</h2>
+        <p>The default response to a mispick claim is assumption-first: assume the warehouse got it wrong, ship a replacement, move on. That's fast in the moment and expensive in aggregate — and it hides the real root cause. A &ldquo;wrong item&rdquo; can be any of six completely different situations, and each one needs a different response:</p>
+        <ul class="choices">
+          <li><span class="choice-key">True warehouse mispick</span> — a different SKU was physically picked and shipped. Genuine error; the received item is not the item that was ordered.</li>
+          <li><span class="choice-key">Manufacturer packaging change</span> — same item, new box. The part is correct; only the packaging or branding changed.</li>
+          <li><span class="choice-key">Vendor / manufacturer substitution</span> — the part number was superseded. The old number maps to a new one; the item is functionally equivalent.</li>
+          <li><span class="choice-key">Customer ordered the wrong item</span> — what arrived matches the order; the customer expected something different. The error is upstream of the warehouse.</li>
+          <li><span class="choice-key">Catalog listing error</span> — the listing itself is wrong (wrong spec, wrong material, wrong image). The warehouse shipped exactly what the listing said; the listing is the defect.</li>
+          <li><span class="choice-key">Product variation confusion</span> — the customer ordered one variation of a family (a thread size, a voltage) and received a different variation. A close-but-wrong part.</li>
+        </ul>
+        <p>Each of these has a different resolution. Treating them all as &ldquo;mispick&rdquo; means shipping replacements for items that were never wrong, refunding for packaging changes, and never surfacing the listing errors that will generate the next ten identical calls.</p>
+      </section>
+
+      <section class="block reveal" id="process">
+        <h2>The investigation process</h2>
+        <p>The workflow is evidence-first, not assumption-first. Four steps, in order:</p>
+        <ol class="steps">
+          <li><strong>Understand what was ordered.</strong> Pull the Sales Order — the catalog item number, manufacturer part number, description, listing images, and every listed attribute. This is the source of truth for what <em>should</em> have arrived.</li>
+          <li><strong>Determine what was received.</strong> Read the box print, the manufacturer number on the item, the UPC, and the physical specs — dimensions, voltage, material, color, finish, capacity. This is the source of truth for what <em>actually</em> arrived.</li>
+          <li><strong>Compare every specification.</strong> Dimensions, manufacturer number, revision, packaging, branding, generation, distributor labeling — field by field, ordered vs. received. Any mismatch is evidence.</li>
+          <li><strong>Classify into one of the six categories.</strong> Use the decision tree. The classification determines the response.</li>
+        </ol>
+      </section>
+
+      <section class="block reveal" id="before-after">
+        <h2>Before / after</h2>
+        <div class="ba-grid">
+          <div class="ba-card ba-before">
+            <span class="ba-tag">Before</span>
+            <p class="ba-label">Assumption-first — default to &ldquo;mispick,&rdquo; ship a replacement</p>
+            <p class="ba-text">&ldquo;Customer says we sent the wrong filter. I'll just send a replacement for the PARKER 9LPR-50 and refund the return shipping. Not sure why the box says PRB-50 — probably a warehouse mix-up. Marking as mispick and closing.&rdquo;</p>
+          </div>
+          <div class="ba-card ba-after">
+            <span class="ba-tag">After</span>
+            <p class="ba-label">Evidence-first — spec comparison drives the classification</p>
+            <p class="ba-text"><strong>Classification:</strong> Vendor substitution (not a mispick).<br/><strong>Evidence:</strong> Ordered 9LPR-50; received PRB-50. Micron, thread, and height all match. Part number was superseded by the manufacturer.<br/><strong>Response:</strong> Same functional part, no replacement needed. Customer keeps the item; notes reference the supersession for reorders.</p>
+          </div>
+        </div>
+        <p class="note-inline">All names, part numbers, and order numbers in the examples are illustrative.</p>
+      </section>
+
+      <section class="block reveal" id="human-in-loop">
+        <h2>How the human stays in the loop</h2>
+        <ol class="steps">
+          <li>The rep <strong>gathers the evidence</strong> — order record, box label, physical specs. No evidence, no classification.</li>
+          <li>The AI <strong>drafts</strong> the spec comparison, a customer-ready explanation, and standardized internal notes — never a final.</li>
+          <li>The rep <strong>verifies</strong> the specs against the actual item and the listing. The AI can be wrong about a spec; the human confirms it.</li>
+          <li>The rep <strong>owns the classification</strong> and decides the resolution — replacement, keep-it, redirect to the manufacturer, or escalate the listing.</li>
+          <li>The rep <strong>posts</strong> the notes and sends the response.</li>
+        </ol>
+        <p>The AI does the time-consuming, repetitive parts — compare specs, draft the email, format the notes — so the human stays focused on the part that takes judgment: confirming the evidence, naming the root cause, and deciding the right resolution. That's the whole point.</p>
+      </section>
+
+      <section class="block reveal" id="playbook">
+        <h2>The playbook</h2>
+        <p>The investigation is captured as a repeatable playbook with five components, so the workflow doesn't live only in my head:</p>
+        <ul class="choices">
+          <li><span class="choice-key">Evidence checklist</span> — the exact fields to capture for &ldquo;what was ordered&rdquo; and &ldquo;what was received,&rdquo; so nothing gets skipped under pressure.</li>
+          <li><span class="choice-key">Decision tree</span> — a priority-ordered set of questions that turns the evidence into one of the six classifications.</li>
+          <li><span class="choice-key">Confidence rating</span> — high / medium / low, based on how much evidence supports the classification. Low confidence means escalate, don't guess.</li>
+          <li><span class="choice-key">Customer-ready explanation</span> — a plain-language response that explains what happened and what happens next, in the customer's terms.</li>
+          <li><span class="choice-key">Standardized internal notes</span> — consistent, scannable order-management notes that the next person can read in five seconds.</li>
+        </ul>
+      </section>
+
+      <section class="block reveal" id="metrics">
+        <h2>Metrics to track</h2>
+        <p class="note-inline">Outcomes are not yet formally measured — these are the metrics I'd track to validate the workflow.</p>
+        <ul class="choices">
+          <li><span class="choice-key">First-contact resolution (primary)</span> — cases resolved on the first touch because the root cause was identified in the investigation, not after a needless replacement.</li>
+          <li><span class="choice-key">Avoided replacements &amp; refunds</span> — dollars and units saved when a &ldquo;mispick&rdquo; turns out to be a packaging change or substitution that needs no replacement.</li>
+          <li><span class="choice-key">Recontact rate</span> — how often the same customer comes back about the same order, a signal the classification or response was wrong.</li>
+          <li><span class="choice-key">Time to classification</span> — how long it takes to move from &ldquo;wrong item&rdquo; to a confident root cause.</li>
+          <li><span class="choice-key">Escalation rate</span> — how often low-confidence cases get escalated vs. resolved at first touch.</li>
+          <li><span class="choice-key">Documentation completeness</span> — whether every case captures the evidence, classification, and resolution consistently.</li>
+        </ul>
+      </section>
+
+      <section class="block reveal" id="future">
+        <h2>Edge cases &amp; future state</h2>
+        <p><strong>The hard case: multi-item, multi-issue orders.</strong> A single order can mix several of these categories at once — one true mispick, one packaging change, one customer error. The single-classification model doesn't fit cleanly when an order has several different problems.</p>
+        <p><strong>Planned feature: per-line classification.</strong> For the future state, I want the workflow to classify each line item independently and produce a combined response and note set that handles a mixed order cleanly — instead of forcing one classification onto a multi-problem order.</p>
+        <p><strong>Feedback loop to the catalog.</strong> The longer-term value is upstream: every confirmed listing error is a signal back to the catalog team. The investigation doesn't just resolve one customer's call — it surfaces the listing defects that would have generated the next ten.</p>
+      </section>
+
+      <section class="block reveal" id="why">
+        <h2>Why this matters (the bigger picture)</h2>
+        <p class="pullquote">AI in support should do all the time-consuming, repetitive tasks so humans can remain the warm human element in the relationship.</p>
+        <p>This isn't just &ldquo;a faster way to handle mispicks.&rdquo; It's a pattern: take a high-cost, high-ambiguity contact type, replace assumption with evidence, let AI draft the repetitive artifacts (comparison, email, notes), and keep the human as the one who confirms the evidence and owns the decision. That pattern generalizes — to call-note drafting, knowledge-base work, and coaching — which is exactly the lane I'm building toward: <strong>AI-enabled support operations and CX workflow design.</strong></p>
+      </section>
+
+      <section class="block reveal" id="stack">
+        <h2>Tech stack</h2>
+        <div class="stack-grid">
+          <div class="stack-card"><span class="stack-name">Gemini Gem</span><span class="stack-role">AI assistant for product search &amp; response drafting</span></div>
+          <div class="stack-card"><span class="stack-name">Order management</span><span class="stack-role">Order management &amp; internal notes</span></div>
+          <div class="stack-card"><span class="stack-name">Catalog</span><span class="stack-role">Catalog &amp; listing source of truth</span></div>
+          <div class="stack-card"><span class="stack-name">Carrier tracking</span><span class="stack-role">Verify shipment references &amp; exceptions</span></div>
+          <div class="stack-card"><span class="stack-name">Support desk</span><span class="stack-role">Ticketing &amp; escalation</span></div>
+        </div>
+      </section>
+
+      <section class="cta reveal" id="try">
+        <h2>Try the demo</h2>
+        <p>An interactive web app that lets you run the investigation yourself on anonymized mock data — six scenarios across all six root causes, a reactive spec-comparison engine, toggleable investigation findings, a decision tree, a confidence meter, and generated customer-ready and internal notes with a v1/v2 refinement view.</p>
+        <div class="cta-actions">
+          <a href="../../investigation/" class="btn btn-solid">Open the demo &rarr;</a>
+          <a href="https://github.com/janackeh/mispick-investigation-demo" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub · README &amp; demo code</a>
+        </div>
+      </section>
+
+      <p class="disclaimer reveal">An anonymized case study based on a support workflow I designed and use. Names, orders, part numbers, and ticket numbers are illustrative. The investigation process, decision tree, and playbook are my own work. The interactive demo uses mock data and is not connected to any live catalog, customer, order, or warehouse system.</p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="../../" class="footer-back">&larr; Back to Janackeh Blackwell</a>
+      <a href="../../investigation/" class="footer-link">Try the demo</a>
+      <a href="https://www.linkedin.com/in/janackeh/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+      <a href="https://github.com/janackeh/mispick-investigation-demo" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+    </div>
+  </footer>
+
+  <script src="../case-study.js" defer></script>
+</body>
+</html>

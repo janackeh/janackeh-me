@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+  <link rel="mask-icon" href="../favicon.svg" color="#b76e79" />
+  <title>Mispick Investigation Demo — Janackeh Blackwell</title>
+  <meta name="description" content="Interactive demo of an evidence-first mispick verification workflow for customer support operations. Rule-based portfolio demo using anonymized sample data — not connected to live catalog, customer, or warehouse systems." />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./investigation.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to demo</a>
+
+  <header class="inv-header" id="header">
+    <div class="inv-header-inner">
+      <a class="brand" href="../" aria-label="Back to Janackeh Blackwell's site">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="currentColor"/>
+          <text x="16" y="23" text-anchor="middle" font-family="Satoshi, sans-serif" font-weight="700" font-size="20" fill="var(--color-bg)">J</text>
+        </svg>
+        <span class="brand-name">Janackeh Blackwell</span>
+      </a>
+      <nav class="inv-nav" aria-label="Demo navigation">
+        <a href="#intake">Evidence</a>
+        <a href="#classify">Classify</a>
+        <a href="#outputs">Outputs</a>
+        <a href="../case-study/mispick-verification/">Case study</a>
+      </nav>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="inv-intro">
+      <div class="container">
+        <p class="eyebrow">Portfolio Demo · Mispick Verification</p>
+        <h1>Did they actually ship the wrong item?</h1>
+        <p class="lede">An interactive, evidence-first investigation workflow. Pick a scenario, adjust what the customer reportedly received, toggle investigation findings, and watch the spec comparison, classification, confidence, and customer-ready outputs recompute live.</p>
+        <p class="disclaimer-row">Illustrative portfolio demo using anonymized mock data. Not connected to any live catalog, customer, order, or warehouse system. catalog item numbers and manufacturer details shown here are sample data.</p>
+      </div>
+    </section>
+
+    <!-- Scenario selector -->
+    <section class="scenario-bar" id="scenarios">
+      <div class="container">
+        <p class="bar-label">Choose a case</p>
+        <div class="scenario-chips" id="scenarioChips" role="tablist" aria-label="Investigation scenarios"></div>
+      </div>
+    </section>
+
+    <!-- Playbook progress rail -->
+    <section class="playbook-rail">
+      <div class="container">
+        <ol class="playbook-steps" id="playbookSteps">
+          <li data-step="intake"><span class="ps-num">1</span><span class="ps-label">Capture what was ordered</span></li>
+          <li data-step="intake"><span class="ps-num">2</span><span class="ps-label">Capture what was received</span></li>
+          <li data-step="classify"><span class="ps-num">3</span><span class="ps-label">Compare every spec</span></li>
+          <li data-step="classify"><span class="ps-num">4</span><span class="ps-label">Classify the issue</span></li>
+          <li data-step="classify"><span class="ps-num">5</span><span class="ps-label">Rate confidence</span></li>
+          <li data-step="outputs"><span class="ps-num">6</span><span class="ps-label">Generate outputs</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ZONE 1: Evidence intake -->
+    <section class="zone zone-intake" id="intake">
+      <div class="container">
+        <div class="zone-head">
+          <span class="zone-tag">Step 1–2</span>
+          <h2>Evidence intake</h2>
+          <p class="zone-sub">Ordered details come from the order record. Received details are what the customer reports is on the box and the item — edit them to reflect the investigation.</p>
+        </div>
+        <div class="intake-grid">
+          <!-- Ordered (read-only) -->
+          <article class="card ordered-card">
+            <header class="card-head">
+              <span class="card-pill pill-ordered">Ordered</span>
+              <span class="card-meta" id="orderedSo"></span>
+            </header>
+            <div class="card-body" id="orderedBody"></div>
+          </article>
+          <!-- Received (editable) -->
+          <article class="card received-card">
+            <header class="card-head">
+              <span class="card-pill pill-received">Received (reported)</span>
+              <button type="button" class="reset-btn" id="resetReceived" title="Reset to scenario defaults">Reset</button>
+            </header>
+            <div class="card-body" id="receivedBody"></div>
+            <div class="evidence-flags" id="evidenceFlags">
+              <p class="flags-label">Investigation findings</p>
+              <div class="flags-grid" id="flagsGrid"></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZONE 2: Compare & classify -->
+    <section class="zone zone-classify" id="classify">
+      <div class="container">
+        <div class="zone-head">
+          <span class="zone-tag">Step 3–5</span>
+          <h2>Compare &amp; classify</h2>
+          <p class="zone-sub">Field-by-field spec comparison, a decision tree that lights up the classification path, and a confidence rating backed by evidence.</p>
+        </div>
+        <div class="classify-grid">
+          <!-- Spec comparison -->
+          <article class="card compare-card">
+            <header class="card-head"><span class="card-pill pill-compare">Spec comparison</span></header>
+            <div class="compare-table" id="compareTable" role="table" aria-label="Ordered vs received specification comparison"></div>
+            <p class="compare-summary" id="compareSummary"></p>
+          </article>
+          <!-- Decision tree + classification -->
+          <article class="card tree-card">
+            <header class="card-head"><span class="card-pill pill-tree">Decision tree</span></header>
+            <div class="tree" id="decisionTree"></div>
+            <div class="classification-result" id="classificationResult"></div>
+            <div class="confidence" id="confidenceBlock">
+              <p class="conf-label">Confidence</p>
+              <div class="conf-meter" id="confMeter"></div>
+              <ul class="conf-evidence" id="confEvidence"></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZONE 3: Outputs -->
+    <section class="zone zone-outputs" id="outputs">
+      <div class="container">
+        <div class="zone-head">
+          <span class="zone-tag">Step 6</span>
+          <h2>Generated outputs</h2>
+          <p class="zone-sub">A customer-ready explanation and standardized internal notes, each with a v1 draft and a refined v2. Edit either field and run a word-level diff to see the human-in-the-loop review step.</p>
+        </div>
+
+        <div class="outputs-grid">
+          <!-- Customer email -->
+          <article class="card output-card">
+            <header class="card-head">
+              <span class="card-pill pill-email">Customer-ready explanation</span>
+              <div class="version-toggle" role="tablist" aria-label="Email version">
+                <button type="button" class="vt-btn is-active" data-target="email" data-ver="v1" role="tab" aria-selected="true">v1 draft</button>
+                <button type="button" class="vt-btn" data-target="email" data-ver="v2" role="tab" aria-selected="false">v2 refined</button>
+              </div>
+            </header>
+            <div class="output-field">
+              <label for="emailOut" class="field-label">Email to customer</label>
+              <button type="button" class="copy-btn" data-copy="emailOut">Copy</button>
+            </div>
+            <textarea id="emailOut" class="field-area" rows="8"></textarea>
+            <div class="output-actions">
+              <button type="button" id="emailDiffBtn" class="btn btn-ghost btn-sm">Show what I changed</button>
+              <span id="emailDiffStatus" class="status-text" aria-live="polite"></span>
+            </div>
+            <div id="emailDiffPanel" class="diff-panel" hidden>
+              <p class="diff-title">Changes from v1 → v2</p>
+              <div id="emailDiff" class="diff-block"></div>
+            </div>
+          </article>
+
+          <!-- Internal notes -->
+          <article class="card output-card">
+            <header class="card-head">
+              <span class="card-pill pill-notes">Internal investigation notes</span>
+              <div class="version-toggle" role="tablist" aria-label="Notes version">
+                <button type="button" class="vt-btn is-active" data-target="notes" data-ver="v1" role="tab" aria-selected="true">v1 draft</button>
+                <button type="button" class="vt-btn" data-target="notes" data-ver="v2" role="tab" aria-selected="false">v2 refined</button>
+              </div>
+            </header>
+            <div class="output-field">
+              <label for="notesOut" class="field-label">Order management notes</label>
+              <button type="button" class="copy-btn" data-copy="notesOut">Copy</button>
+            </div>
+            <textarea id="notesOut" class="field-area" rows="8"></textarea>
+            <div class="output-actions">
+              <button type="button" id="notesDiffBtn" class="btn btn-ghost btn-sm">Show what I changed</button>
+              <span id="notesDiffStatus" class="status-text" aria-live="polite"></span>
+            </div>
+            <div id="notesDiffPanel" class="diff-panel" hidden>
+              <p class="diff-title">Changes from v1 → v2</p>
+              <div id="notesDiff" class="diff-block"></div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Manufacturer redirect -->
+        <article class="card redirect-card" id="redirectCard" hidden>
+          <header class="card-head"><span class="card-pill pill-redirect">Manufacturer sourcing</span></header>
+          <div class="redirect-body" id="redirectBody"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- What this demonstrates -->
+    <section class="zone zone-demonstrates">
+      <div class="container">
+        <div class="zone-head">
+          <span class="zone-tag">For hiring managers</span>
+          <h2>What this demonstrates</h2>
+        </div>
+        <ul class="demonstrates-grid" id="demonstratesGrid"></ul>
+      </div>
+    </section>
+
+    <!-- Metrics I would track -->
+    <section class="zone zone-metrics">
+      <div class="container">
+        <div class="zone-head">
+          <span class="zone-tag">Outcomes (not yet measured)</span>
+          <h2>Metrics I would track</h2>
+          <p class="zone-sub">This is a portfolio concept. In a real deployment, these are the outcomes I'd measure to prove the workflow's impact.</p>
+        </div>
+        <ul class="metrics-grid" id="metricsGrid"></ul>
+      </div>
+    </section>
+
+    <footer class="inv-footer">
+      <div class="container">
+        <p class="footer-note">Anonymized portfolio demo — names, order numbers, catalog item numbers, and manufacturer details are illustrative sample data. This is a rule-based demo using mock data; it is not connected to any live catalog, customer, order, or warehouse system and does not verify current product availability.</p>
+        <p class="footer-links">
+          <a href="../case-study/mispick-verification/">Read the case study</a>
+          <a href="https://github.com/janackeh/mispick-investigation-demo#what-it-demonstrates" target="_blank" rel="noopener noreferrer">README</a>
+          <a href="https://github.com/janackeh/mispick-investigation-demo" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+        </p>
+        <p class="footer-copy">© <span id="year"></span> Janackeh Blackwell</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="./investigation.js" defer></script>
+</body>
+</html>
