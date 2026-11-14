@@ -570,10 +570,29 @@
 }
 
 /* ---------- Learning & Certifications ---------- */
+.learning .section-title {
+  max-width: 24ch;
+}
+.learning-group + .learning-group {
+  margin-top: var(--space-12);
+}
+.learning-group-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
 .certs-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-5);
+}
+.certs-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
 }
 .cert-card {
   display: flex;
@@ -589,7 +608,8 @@
   border-color: var(--color-primary);
   box-shadow: var(--shadow-sm);
 }
-.cert-card[data-status="in-progress"] {
+.cert-card[data-status="in-progress"],
+.cert-card[data-status="reading"] {
   border-color: var(--color-primary);
   background: var(--color-primary-soft);
 }
@@ -606,13 +626,22 @@
   color: var(--color-text-muted);
   margin-bottom: var(--space-3);
 }
-.cert-card[data-status="in-progress"] .cert-status {
+.cert-card[data-status="in-progress"] .cert-status,
+.cert-card[data-status="reading"] .cert-status {
   background: var(--color-primary);
   color: #ffffff;
 }
 .cert-card[data-status="next"] .cert-status {
   background: var(--color-primary-soft);
   color: var(--color-primary);
+}
+.cert-card[data-status="personal"] .cert-status {
+  background: color-mix(in oklab, #4a6d70 18%, var(--color-surface-2));
+  color: color-mix(in oklab, #3f5f62 50%, var(--color-text));
+}
+.cert-card[data-status="building"] .cert-status {
+  background: var(--color-text);
+  color: var(--color-bg);
 }
 .cert-name {
   font-size: var(--text-base);
@@ -632,11 +661,14 @@
   color: var(--color-text-muted);
   line-height: 1.5;
 }
-@media (max-width: 980px) {
-  .certs-grid { grid-template-columns: repeat(2, 1fr); }
+.cert-card .project-link {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  align-self: flex-start;
 }
 @media (max-width: 540px) {
-  .certs-grid { grid-template-columns: 1fr; }
+  .certs-grid,
+  .certs-grid-2 { grid-template-columns: 1fr; }
 }
 
 /* ---------- Skills ---------- */
